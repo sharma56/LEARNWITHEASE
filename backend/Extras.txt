@@ -1,0 +1,100 @@
+--------------------------auth.js --------------------------------------------
+
+// Using then and catch
+// router.post("/register", (req, res) => {
+//   const {
+//     name,
+//     age,
+//     email,
+//     mobile,
+//     dob,
+//     address,
+//     // zip,
+//     password,
+//     cconfirmPass,
+//   } = req.body;
+//   if (!name || !age || !email || !mobile || !dob || !address || !password) {
+//     return res
+//       .status(422)
+//       .json({ error: "Plz fill all the field properly!!!" });
+
+//     // left email is the database email and the right one is the user input email
+//     Student.findOne({ email: email }).then((userExist) => {
+//       if (userExist) {
+//         return res.status(422).json({ message: "User Already exists.." });
+//       } else {
+//         const studentInfo = new Student({
+//           name,
+//           age,
+//           email,
+//           mobile,
+//           dob,
+//           address,
+//           zip,
+//           password,
+//           gender,
+//         });
+
+//         studentInfo
+//           .save()
+//           .then(() =>
+//             res.status(201).json({ message: "User registerd sucessfully..." })
+//           )
+//           .catch((err) =>
+//             res.status(500).json({
+//               error: "failed to register",
+//             })
+//           )
+//           .catch((err) => {
+//             console.log(err);
+//           });
+//       }
+//     });
+//   }
+// });
+
+
+// Using async and await
+// -----------------------Register Route--------------------------------------------------
+// router.post("/register", async (req, res) => {
+//   const { name, age, email, mobile, dob, address, password, confirmPass } =
+//     req.body;
+//   console.log("This is req.body", req.body);
+// if (
+//   !name ||
+//   !age ||
+//   !email ||
+//   !mobile ||
+//   !dob ||
+//   !address ||
+//   !password ||
+//   !confirmPass
+// ) {
+//   return res
+//     .status(422)
+//     .json({ error: "Plz fill all the field properly!!!" });
+// }
+//   try {
+//     const userExist = await Student.findOne({ email: email });
+//     console.log("this is to use if user Exists or not ", userExist);
+//     if (userExist) {
+//       return res.status(422).json({ message: "User Already exists.." });
+//     } else {
+//       const studentInfo = new Student({
+//         name,
+//         age,
+//         email,
+//         mobile,
+//         dob,
+//         address,
+//         password,
+//         confirmPass,
+//       });
+//       const userRegister = await studentInfo.save();
+//       console.log(userRegister);
+//       return res.status(201).json({ message: "User registerd sucessfully..." });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
