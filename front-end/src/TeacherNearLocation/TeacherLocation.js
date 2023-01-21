@@ -49,7 +49,8 @@ const TeacherLocation = () => {
       .then((res) => {
         console.log(res);
         // setclick(false);
-        navigate("/OnlinePayment");
+        // navigate("/OnlinePayment");
+        navigate("/RazorPay");
       });
     // alert("Couorse taken done");
   };
