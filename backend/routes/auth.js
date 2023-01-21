@@ -165,16 +165,6 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Plz fill the fields!!!" });
     }
     const TeacherLogin = await Teacher.findOne({ email: email });
-    // if (TeacherLogin) {
-    //   const isMatch = await bcrypt.compare(password, TeacherLogin.password);
-    //   if (!isMatch) {
-    //     res.json({ message: "invalid Credentials..." });
-    //   } else {
-    //     res.status(200).send({ message: "Login Sucessfull", TeacherLogin });
-    //   }
-    // } else {
-    //   res.json({ message: "invalid Credentials..." });
-    // }
     if (!TeacherLogin) {
       return res
         .status(200)
@@ -237,16 +227,22 @@ router.post("/Adminlogin", async (req, res) => {
       return res.status(400).json({ error: "Plz fill the fields!!!" });
     }
     const AdminLogin = await Admin.findOne({ email: email });
-    if (AdminLogin) {
-      const isMatch = await bcrypt.compare(password, AdminLogin.password);
-      if (!isMatch) {
-        res.json({ message: "invalid Credentials..." });
-      } else {
-        res.status(200).send({ message: "Login Sucessfull", AdminLogin });
-      }
-    } else {
-      res.json({ message: "invalid Credentials..." });
+    if (!AdminLogin) {
+      return res.status(200).send({ message: "Not found", success: false });
     }
+    const isMatch = await bcrypt.compare(
+      req.body.password,
+      AdminLogin.password
+    );
+    if (!isMatch) {
+      return res.status(200).json({
+        error: "invalid Credentials... Email Or Password",
+        success: false,
+      });
+    }
+    res
+      .status(200)
+      .send({ message: "Login Sucessfully..", success: true, AdminLogin });
   } catch (err) {
     console.log(err);
   }
@@ -349,6 +345,7 @@ router.post("/AddCourse", async (req, res) => {
     newCourse.save((err) => {
       if (err) {
         res.send(err);
+        console.log(err);
       } else {
         res.send({ message: "Course Added Sucessfully" });
       }

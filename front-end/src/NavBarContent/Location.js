@@ -26,11 +26,20 @@ function Location() {
         console.log("This is the catch one", error);
       });
   };
+  const mystyle = {
+    display: "block",
+    marginleft: "200px",
+    margintop: "20px",
+    marginbottom: "22px",
+    backgroundcolor: "#3F485B",
+  };
   return (
-    <div className="loc-parent">
-      <div className="container loc-con">
+    <div className="loc-parent container">
+      <div className="loc-con">
+        <h1 style={{ fontfamily: "monospace" }}>hello!! Guest</h1>
         <input
           className="loc-input"
+          style={{ textalign: "center" }}
           type="text"
           value={zip}
           onChange={(e) => setZip(e.target.value)}
@@ -39,11 +48,31 @@ function Location() {
         <button
           onClick={FindTeacher}
           type="button"
-          class="btn me-1 btn-outline-dark"
+          style={mystyle}
+          class="btn loc-btn me-1 btn-outline-dark"
         >
           Find Teacher
         </button>
       </div>
+
+      {/* <div class="container">
+        <div class="box">
+          <h1 style="font-family: monospace;">hello!! Guest</h1>
+          <input
+            type="text"
+            class="textbx"
+            placeholder="Enter your Name"
+            style="text-align: center;"
+          />
+          <button
+            onclick="window.location.href='learn.html'"
+            style="display: block; margin-left: 200px; margin-top: 20px; margin-bottom: 22px;"
+            class="btn"
+          >
+            Enter
+          </button>
+        </div>
+      </div> */}
     </div>
   );
 }

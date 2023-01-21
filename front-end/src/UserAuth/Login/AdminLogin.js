@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { MyContext } from "../../MyProvider";
+import { message } from "antd";
 
 function AdminLogin() {
   const context = useContext(MyContext);
@@ -22,24 +23,21 @@ function AdminLogin() {
       [name]: value,
     });
   };
-  const login = () => {
-    const { email, password } = user;
-    axios
-      .post("http://localhost:4500/Adminlogin", user)
-      .then((res) => {
-        if (res.status == 400 || !res) {
-          alert("Invalid Credentials");
-        } else {
-          console.log(res.data.AdminLogin);
-          localStorage.setItem("_id", res.data.AdminLogin._id);
-          console.log(localStorage.getItem("_id"));
-          context.updateUser(res.data.AdminLogin);
-          navigate("/AdminProfile");
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+  const login = async () => {
+    try {
+      const resp = await axios.post("http://localhost:4500/Adminlogin", user);
+      if (resp.data.success) {
+        message.success("Loggedin Successfully...");
+        localStorage.setItem("_id", resp.data.AdminLogin._id);
+        context.updateUser(resp.data.AdminLogin);
+        navigate("/AdminProfile");
+      } else {
+        message.error(resp.data.error);
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("You got an error");
+    }
   };
   return (
     <>

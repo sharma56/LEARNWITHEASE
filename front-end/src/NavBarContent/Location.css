@@ -8,12 +8,42 @@
 .loc-con{
     align-items: center;
     margin: 25%; 
+    border: none ;
+    width: 500px;
+    height: 500;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px; 
+
+}
+.textbx:focus
+{
+    background-color: rgb(199, 195, 195);
+    outline: none;
+}
+
+/* .loc-btn:hover
+{
+    background-color: #0b1b3d; 
+    cursor: pointer;
+} */
+.loc-btn{
+    padding: 5px;  
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #1f2533;  /* here */
+  color: white;
+  font-weight: 800;
+  border:hidden;
 }
 
 .loc-input{
     width: 300px;
     align-items: center;
     height: 40px;
+    /* background-color: #0b1b3d; 
+    cursor: pointer; */
 }
 
 /* .loc-parent{

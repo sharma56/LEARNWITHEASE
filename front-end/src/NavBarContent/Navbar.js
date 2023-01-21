@@ -90,11 +90,11 @@ function Navbar() {
                     Teacher
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/AdminRegister" className="dropdown-item">
                     Admin
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </li>
           </ul>
