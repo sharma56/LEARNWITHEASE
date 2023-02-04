@@ -134,30 +134,6 @@ router.post("/TeacherSignUp", async (req, res) => {
 
 // ---------------------------------------------Teacher Login -------------------------------------------
 
-// router.post("/StudentLogin", async (req, res) => {
-//   try {
-//     const userLogin = await Student.findOne({ email: req.body.email });
-//     if (!userLogin) {
-//       return res
-//         .status(200)
-//         .send({ message: "User not found", success: false });
-//     }
-//     const isMatch = await bcrypt.compare(req.body.password, userLogin.password);
-//     if (!isMatch) {
-//       return res.status(200).json({
-//         error: "invalid Credentials... Email Or Password",
-//         success: false,
-//       });
-//     }
-//     res
-//       .status(200)
-//       .send({ message: "Login Sucessfully..", success: true, userLogin });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({ message: `Error in Login CTRL ${error.message}` });
-//   }
-// });
-
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

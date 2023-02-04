@@ -22,7 +22,7 @@ function TakenCourses() {
   return (
     <>
       {/* <StudentNavBar /> */}
-      <h1 className="top-head">Taken Courses</h1>
+      <h1 className="top-head text-center">Taken Courses</h1>
       <table class="table table-light tbl">
         <thead className="tab">
           <tr>

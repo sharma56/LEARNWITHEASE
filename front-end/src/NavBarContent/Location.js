@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import searchbtn from "../imgs/search.png";
 import "./Location.css";
 import { useNavigate } from "react-router-dom";
 function Location() {
@@ -34,28 +35,43 @@ function Location() {
     backgroundcolor: "#3F485B",
   };
   return (
-    <div className="loc-parent container">
-      <div className="loc-con">
-        <h1 style={{ fontfamily: "monospace" }}>hello!! Guest</h1>
+    <div className="search-container">
+      <form action="" className="search-bar">
         <input
-          className="loc-input"
-          style={{ textalign: "center" }}
           type="text"
+          placeholder="Enter Pin Code"
           value={zip}
           onChange={(e) => setZip(e.target.value)}
-          placeholder="Enter Pin Code"
         />
-        <button
-          onClick={FindTeacher}
-          type="button"
-          style={mystyle}
-          class="btn loc-btn me-1 btn-outline-dark"
-        >
-          Find Teacher
+        <button type="button" onClick={FindTeacher}>
+          <img src={searchbtn} alt="" />
         </button>
-      </div>
+      </form>
+    </div>
 
-      {/* <div class="container">
+    // <div className="loc-parent container">
+    //   <div className="loc-con">
+    //     <h1 style={{ fontfamily: "monospace" }}>hello!! Guest</h1>
+    //     <input
+    //       className="loc-input"
+    //       style={{ textalign: "center" }}
+    //       type="text"
+    //       value={zip}
+    //       onChange={(e) => setZip(e.target.value)}
+    //       placeholder="Enter Pin Code"
+    //     />
+    //     <button
+    //       onClick={FindTeacher}
+    //       type="button"
+    //       style={mystyle}
+    //       class="btn loc-btn me-1 btn-outline-dark"
+    //     >
+    //       Find Teacher
+    //     </button>
+    //   </div>
+    // ==========================================================================================================================================
+    // {
+    /* <div class="container">
         <div class="box">
           <h1 style="font-family: monospace;">hello!! Guest</h1>
           <input
@@ -72,8 +88,9 @@ function Location() {
             Enter
           </button>
         </div>
-      </div> */}
-    </div>
+      </div> */
+    // }
+    // </div>
   );
 }
 export default Location;

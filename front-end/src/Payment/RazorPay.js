@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { MyContext } from "../MyProvider";
+import { useContext } from "react";
 const RazorPay = () => {
+  const context = useContext(MyContext);
   const [amount, setamount] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,0 +1,16 @@
+.addCourse{
+    min-width: 100vw;
+    min-height: 100vh;
+    padding: 5%;
+    background-image: linear-gradient(rgba(0,8,51,0.9),rgba(0,8,51,0.9)),url(../imgs/Searchbackground.jpg);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addCourseFile{
+    width: 90%;
+    cursor: pointer;
+}

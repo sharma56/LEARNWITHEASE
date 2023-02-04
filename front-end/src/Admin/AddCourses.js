@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
+import "./AddCourses.css";
 // import { MyContext } from "../../MyProvider";
 import { MyContext } from "../MyProvider";
 const AddCourses = () => {
@@ -31,6 +32,9 @@ const AddCourses = () => {
         })
         .then((res) => {
           alert(res.data.message);
+          setCourseInfo(" ");
+          setPostImage(" ");
+          setteacher_id(" ");
         })
         .catch((error) => {
           alert("Got some error ", error);
@@ -50,8 +54,8 @@ const AddCourses = () => {
 
   return (
     <>
-      <div>
-        <form>
+      <div className="addCourse">
+        {/* <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Add Course</label>
             <input
@@ -64,9 +68,6 @@ const AddCourses = () => {
               name="courseTitle"
               value={courseInfo.courseTitle}
             />
-            {/* <small id="emailHelp" class="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small> */}
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">teacher_id</label>
@@ -82,9 +83,6 @@ const AddCourses = () => {
               }}
               name="courseTitle"
             />
-            {/* <small id="emailHelp" class="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small> */}
           </div>
           <div className="form-group">
             <label for="exampleInputPassword1">Course Price</label>
@@ -114,6 +112,85 @@ const AddCourses = () => {
           </div>
 
           <button type="button" onClick={addCourse} class="btn btn-primary">
+            Add Course
+          </button>
+        </form> */}
+        <form action="">
+          <div>
+            <label>Add Course</label>
+            <input
+              type="text"
+              class="form-control"
+              // id="exampleInputEmail1"
+              // aria-describedby="emailHelp"
+              placeholder="Enter Course"
+              onChange={handleChange}
+              name="courseTitle"
+              value={courseInfo.courseTitle}
+            />
+          </div>
+          <div>
+            <label>Teacher Id</label>
+            <input
+              type="text"
+              class="form-control"
+              // id="exampleInputEmail1"
+              // aria-describedby="emailHelp"
+              placeholder="Enter Teacher Id"
+              value={teacher_id}
+              onChange={(e) => {
+                setteacher_id(e.target.value);
+              }}
+              name="courseTitle"
+            />
+          </div>
+          <div>
+            <label>Course Price</label>
+            <input
+              type="Number"
+              className="form-control"
+              // id="exampleInputPassword1"
+              placeholder="Add the Price"
+              onChange={handleChange}
+              name="coursePrice"
+              value={courseInfo.coursePrice}
+            />
+          </div>
+          {/* <div>
+            <label>Choose Course Image</label>
+            <br />
+            <input
+              type="file"
+              name="myFile"
+              className="form-control-file addCourseFile"
+              id="exampleFormControlFile1"
+              accept=".jpeg,.png,.jpg"
+              onChange={(e) => {
+                handleFileUpload(e);
+              }}
+            />
+          </div> */}
+          <div class="mb-3">
+            <label for="formFile" class="form-label">
+              <span className="details">Add Course Image</span>
+            </label>
+            <input
+              class="form-control"
+              name="myFile"
+              type="file"
+              id="formFile"
+              accept=".jpeg,.png,.jpg"
+              onChange={(e) => {
+                handleFileUpload(e);
+              }}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={addCourse}
+            class="btn me-1 btn-outline-success"
+          >
             Add Course
           </button>
         </form>
