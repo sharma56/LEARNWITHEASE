@@ -73,3 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 1. git status
 2. git add .
+3. git commit -m "04-02-2023"
+4. git push -u origin master
+5. git status
