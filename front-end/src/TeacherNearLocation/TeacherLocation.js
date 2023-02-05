@@ -76,8 +76,8 @@ const TeacherLocation = () => {
     return (
       <>
         <h1>{teacherId}</h1>
-        <div className="container-fluid p-5  text-white text-center bg-primary bg-gradient p-5">
-          <div className="  hover_box container-fluid   border  row  p-1 mt-5  text-center">
+        <div className="container-fluid p-5  text-white text-center bg-success bg-gradient p-5">
+          <div className="  hover_box container-fluid  row  p-1 mt-5  text-center">
             <div className=" row container-fluid">
               <div className="col-sm-10 col-md-5 col-lg-5 ">
                 <img

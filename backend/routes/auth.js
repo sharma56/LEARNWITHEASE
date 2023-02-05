@@ -8,6 +8,7 @@ require("../db/conn");
 const Student = require("../models/StudentLoginModel");
 const Teacher = require("../models/TeacherLoginModel");
 const Courses = require("../models/CourseModel");
+var nodemailer = require("nodemailer");
 const Admin = require("../models/Admin");
 const Event = require("../models/Event");
 
@@ -53,9 +54,10 @@ router.post("/studentSignUp", async (req, res) => {
     res.status(201).send({ message: "Register Sucessfully", success: true });
   } catch (error) {
     console.log(error);
-    res
-      .send(500)
-      .send({ sucess: false, message: `Register Controller ${error.message}` });
+    res.send(500).send({
+      success: false,
+      message: `Register Controller ${error.message}`,
+    });
   }
 });
 
@@ -107,7 +109,7 @@ router.post("/TeacherSignUp", async (req, res) => {
     console.log(teacher);
 
     if (teacher)
-      res.status(200).send({ message: "User exists", success: false });
+      res.status(201).send({ message: "User exists", success: false });
     // else {
     const teacherUser = new Teacher({
       name: name,
@@ -120,14 +122,16 @@ router.post("/TeacherSignUp", async (req, res) => {
       gender: gender,
       password: password,
       confirmPass: confirmPass,
+      image: req.body.postImage.base64,
     });
     await teacherUser.save();
     res.status(201).send({ message: "Register Sucessfully", success: true });
   } catch (error) {
     console.log(error);
-    res
-      .send(500)
-      .send({ sucess: false, message: `Register Controller ${error.message}` });
+    res.send(500).send({
+      success: false,
+      message: `Register Controller ${error.message}`,
+    });
   }
   // }
 });
@@ -308,7 +312,7 @@ router.post("/AddCourse", async (req, res) => {
   const tea = await Teacher.findById({ _id: teacher_id });
   console.log(tea.zip);
   const data = await Courses.findOne({ courseTitle });
-  if (data) {
+  if (data.teacher == teacher_id) {
     return res.status(400).send({ message: "Course Exist" });
   } else {
     const newCourse = await new Courses({
@@ -448,4 +452,65 @@ router.get("/EventDisplay", async (req, res) => {
     console.log(error);
   }
 });
+
+// ===========================================Mail Payment===================================================
+router.post("/MailPayment", async (req, res) => {
+  try {
+    console.log(" data sent \n\n");
+    const { courseId, studentId } = req.body;
+    console.log(courseId, studentId);
+    const course = await Courses.findById(courseId);
+    const student = await Student.findById(studentId);
+    const lecture = await Teacher.findById(course.teacher);
+    await hi(student.email, lecture.email, course.courseTitle);
+    res.send("dfd");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const hi = async (student, lecture, course) => {
+  console.log(student, lecture, course);
+  console.log("mail is sending");
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.Email,
+      pass: process.env.Password,
+    },
+    port: 465,
+    host: "smtp.gmail.com",
+  });
+  // student
+  var mailOptions = {
+    from: process.env.Email,
+    to: student,
+    subject: course,
+    text: course,
+  };
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
+  // teacher
+  var mailOptions = {
+    from: process.env.Email,
+    to: lecture,
+    subject: course,
+    text: course,
+  };
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
+  return 1;
+};
 module.exports = router;

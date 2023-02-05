@@ -34,6 +34,9 @@ const TeacherProfile = () => {
                     <Link to="/TeachersStudent">
                       <a>TakenCourses</a>
                     </Link>
+                    <Link to="/TeachersStudent">
+                      <a>Course Material</a>
+                    </Link>
                     <Link to="">
                       <a onClick={logout}>Logout</a>
                     </Link>

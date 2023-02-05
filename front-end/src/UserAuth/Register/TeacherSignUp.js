@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Navbar from "../../NavBarContent/Navbar";
 import "./StudentSignup.css";
+import { useNavigate } from "react-router-dom";
 // axios to call the api
 import axios from "axios";
-
+import { message } from "antd";
 const TeacherSignUp = () => {
+  const navigate = useNavigate();
   const [gender, setGender] = useState("Male");
+  const [postImage, setPostImage] = useState("");
   const [user, setUser] = useState({
     name: "",
     // age: "",
@@ -28,45 +31,72 @@ const TeacherSignUp = () => {
     });
   };
 
-  const register = () => {
-    const {
-      name,
-      email,
-      phoneNumber,
-      dob,
-      specilization,
-      address,
-      zip,
-      password,
-      confirmPass,
-      // gender,
-    } = user;
-    console.log("====================================");
-    console.log(user);
-    console.log("====================================");
-    if (
-      name &&
-      email &&
-      phoneNumber &&
-      dob &&
-      specilization &&
-      address &&
-      zip &&
-      password &&
-      password === confirmPass
-    ) {
-      const responseData = axios
-        .post("http://localhost:4500/TeacherSignUp", { user, gender })
-        .then(
-          (res) => alert(res.data.message)
-          // console.log("i m getting something here", res.data.message)
-        )
-        .catch((error) => {
-          console.log("This is an error", error);
-        });
-    } else {
-      alert("Missing Something!!");
+  const register = async () => {
+    try {
+      const {
+        name,
+        email,
+        phoneNumber,
+        dob,
+        specilization,
+        address,
+        zip,
+        password,
+        confirmPass,
+        // gender,
+      } = user;
+      console.log("====================================");
+      console.log(user);
+      console.log("====================================");
+      if (
+        name &&
+        email &&
+        phoneNumber &&
+        dob &&
+        specilization &&
+        address &&
+        zip &&
+        password &&
+        password === confirmPass
+      ) {
+        const responseData = await axios.post(
+          "http://localhost:4500/TeacherSignUp",
+          {
+            user,
+            gender,
+            postImage,
+          }
+        );
+        //     .then(
+        //       (res) => alert(res.data.message)
+        //       // console.log("i m getting something here", res.data.message)
+        //     )
+        //     .catch((error) => {
+        //       console.log("This is an error", error);
+        //     });
+        // } else {
+        //   alert("Missing Something!!");
+        // }
+        console.log("This is response data", responseData);
+        if (responseData.data.success) {
+          message.success(`Register Sucessfully!...`);
+          navigate("/Login");
+        } else {
+          message.error(responseData.data.message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      message.error(`Something went wrong..`);
     }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const base64 = await convertToBase64(file);
+    setPostImage({ ...postImage, base64 });
+    console.log(postImage);
   };
 
   return (
@@ -90,6 +120,22 @@ const TeacherSignUp = () => {
                   value={user.name}
                   placeholder="Enter your name"
                   onChange={handleChange}
+                />
+              </div>
+              <div class="mb-3">
+                <label for="formFile" class="form-label">
+                  <span className="details">Photo</span>
+                </label>
+                <input
+                  class="form-control"
+                  name="myFile"
+                  // value={user.photo}
+                  type="file"
+                  id="formFile"
+                  accept=".jpeg,.png,.jpg"
+                  onChange={(e) => {
+                    handleFileUpload(e);
+                  }}
                 />
               </div>
               <div className="input-box">
@@ -220,3 +266,16 @@ const TeacherSignUp = () => {
 };
 
 export default TeacherSignUp;
+
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
