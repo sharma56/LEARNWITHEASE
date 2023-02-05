@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MyContext } from "../MyProvider";
 import { useContext } from "react";
 import axios from "axios";
+import "../NavBarContent/Location.css";
+import searchbtn from "../imgs/search.png";
 const RazorPay = () => {
   const context = useContext(MyContext);
   const [amount, setamount] = useState("");
@@ -12,7 +14,9 @@ const RazorPay = () => {
       alert("Enter the amount");
     } else {
       console.log("This is the context", context.state.user.course[0].courseId);
-      const courseId = context.state.user.course[0].courseId;
+      const courseId = localStorage.getItem("corserid");
+      alert("rachalkjdkfjdkjfa");
+      alert(courseId);
       const studentId = context.state.user._id;
       console.log("This is student ", studentId, courseId);
       const res = await axios.post("http://localhost:4500/MailPayment", {
@@ -48,7 +52,7 @@ const RazorPay = () => {
   };
   return (
     <>
-      <h1>Payment Using RazorPayment</h1>
+      {/* <h1>Payment Using RazorPayment</h1>
       <br />
       <input
         type="text"
@@ -61,7 +65,24 @@ const RazorPay = () => {
       />
       <br />
       <br />
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit}>Submit</button> */}
+
+      <div className="search-container">
+        <form action="" className="search-bar">
+          <input
+            type="text"
+            placeholder="Enter the amount"
+            value={amount}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setamount(e.target.value);
+            }}
+          />
+          <button type="button" onClick={handleSubmit}>
+            <img src={searchbtn} alt="" />
+          </button>
+        </form>
+      </div>
     </>
   );
 };

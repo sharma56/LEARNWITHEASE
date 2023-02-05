@@ -29,6 +29,8 @@ function TakenCourses() {
             <th scope="col">Sl No.</th>
             <th scope="col">Course Taken</th>
             <th scope="col">Teacher</th>
+            <th scope="col">start : end</th>
+
             <th scope="col">Communicate</th>
           </tr>
         </thead>
@@ -40,6 +42,9 @@ function TakenCourses() {
                   <th scope="row">{index}</th>
                   <td>{data.course}</td>
                   <td>{data.teacherId}</td>
+                  <td>
+                    {data.start} : {data.end}
+                  </td>
 
                   <td>
                     <button

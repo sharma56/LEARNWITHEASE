@@ -43,6 +43,9 @@ const TeacherLocation = () => {
       NumberofDays,
       modeOfStudy,
     };
+    localStorage.setItem("corserid", courseId);
+    const x = localStorage.getItem("corserid");
+    alert(x);
 
     await axios
       .post("http://localhost:4500/TeacherLocation", { l, id })
@@ -55,7 +58,7 @@ const TeacherLocation = () => {
     // alert("Couorse taken done");
   };
 
-  const rac = (index, data) => {
+  const rac = async (index, data) => {
     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1; // Months start at 0!
@@ -67,29 +70,36 @@ const TeacherLocation = () => {
     const formattedToday = dd + "/" + mm + "/" + yyyy;
     setdate(formattedToday);
     setCourseId(data._id);
+    console.log(courseId);
     setCourse(data.courseTitle);
-
     setTeacherId(location.state[index]);
-    setclick(true);
+    check(data._id, id);
+  };
+
+  const check = async (cid, sid) => {
+    await axios
+      .post("http://localhost:4500/checkcourse", { cid, sid })
+      .then((res) => {
+        alert(" You took this course alredy ");
+        navigate("/Location?");
+      })
+      .catch(() => {
+        setclick(true);
+      });
   };
   if (click) {
     return (
       <>
-        <h1>{teacherId}</h1>
+        {/* <h1>{teacherId}</h1> */}
         <div className="container-fluid p-5  text-white text-center bg-success bg-gradient p-5">
           <div className="  hover_box container-fluid  row  p-1 mt-5  text-center">
             <div className=" row container-fluid">
               <div className="col-sm-10 col-md-5 col-lg-5 ">
-                <img
-                  // src={poojaurl}
-                  width="250px"
-                  height="250px"
-                  alt="loding.."
-                />
+                <img src={Male} width="250px" height="250px" alt="loding.." />
               </div>
               <div className="col-sm-10 col-md-5 col-lg-5 ">
                 <h1>Today Date: {date}</h1>
-                <h2>{id}</h2>
+                {/* <h2>{id}</h2> */}
                 <h2> {teacherId}</h2>
 
                 <div

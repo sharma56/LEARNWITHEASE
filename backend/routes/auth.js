@@ -89,6 +89,7 @@ router.post("/StudentLogin", async (req, res) => {
 // -------------------------------------------Teacher SignUp------------------------------------------------------------
 
 router.post("/TeacherSignUp", async (req, res) => {
+  console.log("teacher sign up");
   try {
     const {
       name,
@@ -97,13 +98,12 @@ router.post("/TeacherSignUp", async (req, res) => {
       dob,
       specilization,
       address,
+      start,
+      end,
       zip,
       password,
       confirmPass,
     } = req.body.user;
-
-    const { gender } = req.body;
-    console.log("This is the name in backend", gender);
 
     const teacher = await Teacher.findOne({ email });
     console.log(teacher);
@@ -119,6 +119,8 @@ router.post("/TeacherSignUp", async (req, res) => {
       specilization: specilization,
       address: address,
       zip: zip,
+      start: start,
+      end: end,
       gender: gender,
       password: password,
       confirmPass: confirmPass,
@@ -312,8 +314,28 @@ router.post("/AddCourse", async (req, res) => {
   const tea = await Teacher.findById({ _id: teacher_id });
   console.log(tea.zip);
   const data = await Courses.findOne({ courseTitle });
-  if (data.teacher == teacher_id) {
-    return res.status(400).send({ message: "Course Exist" });
+  console.log(data);
+
+  if (data !== null) {
+    if (data.teacher == teacher_id) {
+      return res.status(400).send({ message: "Course Exist" });
+    } else {
+      const newCourse = await new Courses({
+        courseTitle: courseTitle,
+        coursePrice: coursePrice,
+        courseImage: req.body.postImage.base64,
+        teacher: teacher_id,
+        zipCode: tea.zip,
+      });
+      newCourse.save((err) => {
+        if (err) {
+          res.send(err);
+          console.log(err);
+        } else {
+          res.send({ message: "Course Added Sucessfully" });
+        }
+      });
+    }
   } else {
     const newCourse = await new Courses({
       courseTitle: courseTitle,
@@ -387,11 +409,23 @@ router.post("/TeacherLocation", async (req, res) => {
   var k = data.course;
   console.log(k.length);
 
-  k.push(l);
+  var course_x = await Courses.findById({ _id: l.courseId });
+  var teacher = await Teacher.findById({ _id: course_x.teacher });
+  var i = {
+    teacherId: l.teacherId,
+    courseId: l.courseId,
+    course: l.course,
+    date: l.date,
+    NumberofDays: l.NumberofDays,
+    modeofStudy: l.modeOfStudy,
+    start: teacher.start,
+    end: teacher.end,
+  };
+  k.push(i);
   await Student.findByIdAndUpdate({ _id: id }, { course: k });
   const data1 = await Student.findById({ _id: id });
   var z = { name: data1.name, _id: data1._id };
-  var course_x = await Courses.findById({ _id: l.courseId });
+
   var list_of_student = course_x.student;
   list_of_student.push(z);
   await Courses.findByIdAndUpdate(
@@ -415,7 +449,27 @@ router.post("/TakenCourses", async (req, res) => {
   const { id } = req.body;
   console.log(id);
   const data = await Student.findById({ _id: id });
+  console.log(data);
   res.json({ course: data.course });
+});
+
+//=  === ========================================check course ==========================================
+
+router.post("/checkcourse", async (req, res) => {
+  const { cid, sid } = req.body;
+  console.log("checking course");
+  var h = 0;
+  const course = await Courses.findById({ _id: cid });
+  for (var i = 0; i < course.student.length && h == 0; i++) {
+    if (sid == course.student[i]._id) {
+      h = 1;
+    }
+  }
+  if (h == 1) {
+    res.send("");
+  } else {
+    res.status(400).send("Course Exist");
+  }
 });
 // ===========================================Event Store =======================================================
 router.post("/EventDetails", async (req, res) => {
@@ -513,4 +567,12 @@ const hi = async (student, lecture, course) => {
 
   return 1;
 };
+// ===========================================================================================================================================
+router.get("/TeacherSignupCourseData", async (req, res) => {
+  // const { id } = req.body;
+  // console.log(id);
+  const data = await Courses.find({});
+  res.json({ course: data });
+});
+
 module.exports = router;

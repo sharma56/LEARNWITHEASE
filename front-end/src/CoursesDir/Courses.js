@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+// import MusicModal from "./MusicModel";
 
 function Courses() {
   const navigate = useNavigate();
@@ -27,12 +28,14 @@ function Courses() {
       <div className="container course-container con-box px-4">
         <div className="row gy-5 row-box">
           <div className="col course-card">
-            <img
-              src={music}
-              className="img-courses course-img"
-              alt="Music"
-              name="imgg"
-            />
+            <Link to="/MusicModel">
+              <img
+                src={music}
+                className="img-courses course-img"
+                alt="Music"
+                name="imgg"
+              />
+            </Link>
           </div>
           <div className="col course-card">
             <img src={dance} className="img-courses" alt="Music" />

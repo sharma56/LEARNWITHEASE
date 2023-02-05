@@ -37,7 +37,7 @@ const Courses = require("../models/CourseModel");
 // });
 
 router.route("/").get((req, res) => {
-  res.json("mf");
+  res.json("Hello");
 });
 
 // router.route("/bitches").get((req, res) => {

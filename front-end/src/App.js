@@ -44,6 +44,8 @@ import RazorPay from "./Payment/RazorPay";
 // import AdminLogin from "./Admin/AdminLogin";
 import AdminLogin from "./UserAuth/Login/AdminLogin";
 import AfterPayment from "./Payment/AfterPayment";
+// import MusicModal from "./CoursesDir/MusicModel";
+
 // import NumberOfClasses from "./TeacherNearLocation/NumberOfClasses";
 // import { useContext } from "react";
 import Event from "./Admin/Event";
@@ -100,6 +102,7 @@ function App() {
           <Route path="AdminProfile" element={<AdminProfile />} />
           <Route path="Event" element={<Event />} />
           <Route path="RazorPay" element={<RazorPay />} />
+          {/* <Route path="MusicModal" element={<MusicModal />} /> */}
         </Routes>
       </div>
     </MyProvider>

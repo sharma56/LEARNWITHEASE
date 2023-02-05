@@ -6,7 +6,7 @@ const Certificate = () => {
   const context = useContext(MyContext);
   return (
     <>
-      <div class="container certificate-container ">
+      {/* <div class="container certificate-container ">
         <h2>LearnWithEase</h2>
         <div class="logo">An Organization</div>
 
@@ -21,6 +21,16 @@ const Certificate = () => {
           <br />
           and flying high
         </div>
+      </div> */}
+
+      <div class="certificate">
+        {console.log(context.state.user.name)}
+        <h1>Certificate of Achievement</h1>
+        <p>This certificate is presented to:</p>
+        <h2>{context.state.user.name}</h2>
+        <p>for completing the course:</p>
+        <h3>Dance</h3>
+        <p class="date">on January 1, 2023</p>
       </div>
     </>
   );

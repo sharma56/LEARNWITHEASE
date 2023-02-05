@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../NavBarContent/Navbar";
 import "./StudentSignup.css";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ const TeacherSignUp = () => {
   const navigate = useNavigate();
   const [gender, setGender] = useState("Male");
   const [postImage, setPostImage] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [selectedValue, setSelectedValue] = useState("");
   const [user, setUser] = useState({
     name: "",
     // age: "",
@@ -20,6 +22,8 @@ const TeacherSignUp = () => {
     zip: "",
     password: "",
     confirmPass: "",
+    start: "",
+    end: "",
     // gender:""
   });
 
@@ -41,6 +45,8 @@ const TeacherSignUp = () => {
         specilization,
         address,
         zip,
+        start,
+        end,
         password,
         confirmPass,
         // gender,
@@ -53,9 +59,10 @@ const TeacherSignUp = () => {
         email &&
         phoneNumber &&
         dob &&
-        specilization &&
         address &&
         zip &&
+        start &&
+        end &&
         password &&
         password === confirmPass
       ) {
@@ -168,7 +175,7 @@ const TeacherSignUp = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="input-box">
+              {/* <div className="input-box">
                 <span className="details">Specilization</span>
                 <input
                   type="text"
@@ -177,7 +184,58 @@ const TeacherSignUp = () => {
                   placeholder="Enter your Specilization"
                   onChange={handleChange}
                 />
+              </div> */}
+              <div className="input-box drop">
+                <span className="details">Specilization</span>
+                <select
+                  style={{ height: "40px", width: "300px" }}
+                  value={selectedValue}
+                  placeholder="Select Specilization"
+                  onChange={(event) => {
+                    setSelectedValue(event.target.value);
+                  }}
+                >
+                  <option value="">Select an option</option>
+                  <option value="option1">Music</option>
+                  <option value="option2">Dance</option>
+                  <option value="option3">Drawing</option>
+                  <option value="option4">Communication Skills</option>
+                  <option value="option5">Yoga</option>
+                  <option value="option5">Personality Development</option>
+                </select>
+                {/* <p>Selected value: {selectedValue}</p> */}
               </div>
+
+              {/**
+               *
+               *
+               */}
+              <div className="input-box">
+                <span className="details">start</span>
+                <input
+                  type="time"
+                  name="start"
+                  placeholder="start"
+                  value={user.start}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input-box">
+                <span className="details">end</span>
+                <input
+                  type="time"
+                  name="end"
+                  value={user.end}
+                  onChange={handleChange}
+                  placeholder="end"
+                />
+              </div>
+
+              {/**
+               *
+               *
+               *
+               */}
               <div className="input-box">
                 <span className="details">Address</span>
                 <input

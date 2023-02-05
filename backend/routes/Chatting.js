@@ -7,10 +7,10 @@ const http = require("http");
 const server = http.createServer(router);
 
 const io = new Server(server, {
-  // cors: {
-  //   origin: `https://localhost:${process.env.PORT}`,
-  //   methods: ["GET", "POST"],
-  // },
+  cors: {
+    origin: `https://localhost:3000`,
+    methods: ["GET", "POST"],
+  },
 });
 
 io.on("connection", (socket) => {

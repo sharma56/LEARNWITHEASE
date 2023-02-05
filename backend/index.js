@@ -36,8 +36,8 @@ app.use(require("./routes/auth"));
 // app.get("/CourseMaterial", (req, res) => {
 //   res.download("../BoyAvtar.jpg");
 // });
-const admin = require("./routes/Admin");
-app.use("/admin", admin);
+// const admin = require("./routes/Admin");
+// app.use("/admin", admin);
 // const chatting = require("./routes/Chatting");
 // app.use("/Chatting", chatting);
 

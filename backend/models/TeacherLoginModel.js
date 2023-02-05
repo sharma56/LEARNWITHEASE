@@ -26,6 +26,12 @@ const TeacherSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  start: {
+    type: String,
+  },
+  end: {
+    type: String,
+  },
   specilization: {
     type: String,
     require: true,

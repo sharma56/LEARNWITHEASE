@@ -14,7 +14,7 @@ const ChatRoom = () => {
   const [allMessages, setMessages] = useState([]);
 
     useEffect(()=>{
-        const socket =io("http://localhost:4500/Chatting");
+        const socket =io("http://localhost:4500/");
         setSocket(socket);
         socket.on("connect",()=>{
             // console.log(socket.id); 
